@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowRightCircleIcon } from '@heroicons/react/24/solid'
 
-export default function Other({ domain, id, query }) {
+export default function Other({ domain, id, query, idInQuery }) {
   const [otherId, setOtherId] = useState("")
 
   useEffect(() => {
@@ -13,15 +13,21 @@ export default function Other({ domain, id, query }) {
     setOtherId(id === videoId1 ? videoId2 : videoId1)
   }, [id])
 
+  let pathname
+  if (idInQuery) {
+    pathname = `/video/${domain}`
+    query.id = otherId
+  } else {
+    pathname = `/video/${domain}/${otherId}`
+    delete query.id
+  }
+
   return (
     <Link
-      href={{
-        pathname: `/video/${domain}/${otherId}`,
-        query,
-      }}
+      href={{ pathname, query }}
       className="flex items-center gap-1 text-blue-500"
     >
-      Next video <ArrowRightCircleIcon className="size-6" />
+      Next video {idInQuery && "(ID as query param)"} <ArrowRightCircleIcon className="size-6" />
     </Link>
   )
 }

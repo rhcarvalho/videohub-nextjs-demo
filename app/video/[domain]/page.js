@@ -1,13 +1,13 @@
 import Link from "next/link"
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/solid'
 
-import VideoHub from "./videohub"
-import Other from "./other"
+import VideoHub from "./[id]/videohub"
+import Other from "./[id]/other"
 
 export default async function Page({ params, searchParams }) {
-  const { domain, id } = await params
+  const { domain } = await params
   const blur = (await searchParams).blur === "true"
-  const userId = (await searchParams).userId
+  const { userId, id } = await searchParams
   return (
     <div className="p-2 flex flex-col gap-4">
       {userId && <script data-videohub="metadata" type="application/json">
