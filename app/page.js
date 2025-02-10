@@ -80,7 +80,7 @@ export default function Home() {
               type="text"
               name="videoId2"
               value={videoId2}
-              onChange={handleChange}
+              onChange={handleChange(setVideoId2)}
               className="group-data-[blur=true]:blur w-full border p-1"
             />
             <Link
