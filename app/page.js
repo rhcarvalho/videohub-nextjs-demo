@@ -1,51 +1,72 @@
+"use client"
+
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
 export default function Home() {
+  const [formData, setFormData] = useState({
+    domain: sessionStorage.getItem("domain") || "",
+    videoId1: sessionStorage.getItem("videoId1") || "",
+    videoId2: sessionStorage.getItem("videoId2") || "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    sessionStorage.setItem(name, value);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      <main className="flex flex-col gap-8 row-start-2">
+        <h1 className="text-4xl font-bold text-center sm:text-left">VideoHub demo using Next.js</h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+        <label className="flex flex-wrap items-baseline gap-2">
+          <span className="text-sm italic text-neutral-700">Enter VideoHub domain:</span>
+          <input
+            type="text"
+            name="domain"
+            value={formData.domain}
+            onChange={handleChange}
+            className="border p-1"
+          />
+        </label>
+
+        <div className="flex flex-col gap-2">
+          <p className="text-sm italic text-neutral-700">Enter video IDs:</p>
+          <div className="grid grid-cols-[1fr_max-content] items-baseline gap-2 md:text-xl font-[family-name:var(--font-geist-mono)]">
+            <input
+              type="text"
+              name="videoId1"
+              value={formData.videoId1}
+              onChange={handleChange}
+              className="w-full border p-1"
             />
-            Deploy now
-          </a>
+            <Link href={`/video/${formData.domain}/${formData.videoId1}`} className="flex items-center gap-1 text-blue-500">Go to video 1 <ArrowRightCircleIcon className="size-6" /></Link>
+            <input
+              type="text"
+              name="videoId2"
+              value={formData.videoId2}
+              onChange={handleChange}
+              className="w-full border p-1"
+            />
+            <Link href={`/video/${formData.domain}/${formData.videoId2}`} className="flex items-center gap-1 text-blue-500">Go to video 2 <ArrowRightCircleIcon className="size-6" /></Link>
+          </div>
+        </div>
+
+        <div className="mt-48 flex gap-4 items-center flex-col sm:flex-row">
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Read our docs
+            Read Next.js docs
           </a>
         </div>
       </main>
