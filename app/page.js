@@ -8,6 +8,7 @@ import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 export default function Home() {
   const [formData, setFormData] = useState({
     domain: sessionStorage.getItem("domain") || "",
+    userId: sessionStorage.getItem("userId") || "",
     videoId1: sessionStorage.getItem("videoId1") || "",
     videoId2: sessionStorage.getItem("videoId2") || "",
     blur: sessionStorage.getItem("blur") === "true" || false,
@@ -39,6 +40,17 @@ export default function Home() {
           />
         </label>
 
+        <label className="flex flex-wrap items-baseline gap-2">
+          <span className="text-sm italic text-neutral-700">Enter external user ID (optional):</span>
+          <input
+            type="text"
+            name="userId"
+            value={formData.userId}
+            onChange={handleChange}
+            className="group-data-[blur=true]:blur border p-1"
+          />
+        </label>
+
         <div className="flex flex-col gap-2">
           <p className="text-sm italic text-neutral-700">Enter video IDs:</p>
           <div className="grid grid-cols-[1fr_max-content] items-baseline gap-2 md:text-xl font-[family-name:var(--font-geist-mono)]">
@@ -49,7 +61,18 @@ export default function Home() {
               onChange={handleChange}
               className="group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link href={`/video/${formData.domain}/${formData.videoId1}${formData.blur ? "?blur=true" : ""}`} className="flex items-center gap-1 text-blue-500">Go to video 1 <ArrowRightCircleIcon className="size-6" /></Link>
+            <Link
+              href={{
+                pathname: `/video/${formData.domain}/${formData.videoId1}`,
+                query: {
+                  ...formData.blur && {blur: true},
+                  ...formData.userId && {userId: formData.userId},
+                },
+              }}
+              className="flex items-center gap-1 text-blue-500"
+            >
+              Go to video 1 <ArrowRightCircleIcon className="size-6" />
+            </Link>
             <input
               type="text"
               name="videoId2"
@@ -57,7 +80,18 @@ export default function Home() {
               onChange={handleChange}
               className="group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link href={`/video/${formData.domain}/${formData.videoId2}${formData.blur ? "?blur=true" : ""}`} className="flex items-center gap-1 text-blue-500">Go to video 2 <ArrowRightCircleIcon className="size-6" /></Link>
+            <Link
+              href={{
+                pathname: `/video/${formData.domain}/${formData.videoId2}`,
+                query: {
+                  ...formData.blur && {blur: true},
+                  ...formData.userId && {userId: formData.userId},
+                },
+              }}
+              className="flex items-center gap-1 text-blue-500"
+            >
+              Go to video 2 <ArrowRightCircleIcon className="size-6" />
+            </Link>
           </div>
         </div>
 
