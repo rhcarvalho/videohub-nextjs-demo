@@ -10,20 +10,22 @@ export default function Home() {
     domain: sessionStorage.getItem("domain") || "",
     videoId1: sessionStorage.getItem("videoId1") || "",
     videoId2: sessionStorage.getItem("videoId2") || "",
+    blur: sessionStorage.getItem("blur") === "true" || false,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    sessionStorage.setItem(name, value);
+    const { name, value, checked } = e.target;
+    const checked_or_value = (e.target.type === "checkbox") ? checked : value;
+    sessionStorage.setItem(name, checked_or_value);
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: checked_or_value,
     }));
   };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2">
+      <main className="flex flex-col gap-8 row-start-2 group" data-blur={formData.blur}>
         <h1 className="text-4xl font-bold text-center sm:text-left">VideoHub demo using Next.js</h1>
 
         <label className="flex flex-wrap items-baseline gap-2">
@@ -33,7 +35,7 @@ export default function Home() {
             name="domain"
             value={formData.domain}
             onChange={handleChange}
-            className="border p-1"
+            className="group-data-[blur=true]:blur border p-1"
           />
         </label>
 
@@ -45,19 +47,30 @@ export default function Home() {
               name="videoId1"
               value={formData.videoId1}
               onChange={handleChange}
-              className="w-full border p-1"
+              className="group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link href={`/video/${formData.domain}/${formData.videoId1}`} className="flex items-center gap-1 text-blue-500">Go to video 1 <ArrowRightCircleIcon className="size-6" /></Link>
+            <Link href={`/video/${formData.domain}/${formData.videoId1}${formData.blur ? "?blur=true" : ""}`} className="flex items-center gap-1 text-blue-500">Go to video 1 <ArrowRightCircleIcon className="size-6" /></Link>
             <input
               type="text"
               name="videoId2"
               value={formData.videoId2}
               onChange={handleChange}
-              className="w-full border p-1"
+              className="group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link href={`/video/${formData.domain}/${formData.videoId2}`} className="flex items-center gap-1 text-blue-500">Go to video 2 <ArrowRightCircleIcon className="size-6" /></Link>
+            <Link href={`/video/${formData.domain}/${formData.videoId2}${formData.blur ? "?blur=true" : ""}`} className="flex items-center gap-1 text-blue-500">Go to video 2 <ArrowRightCircleIcon className="size-6" /></Link>
           </div>
         </div>
+
+        <label className="flex flex-wrap items-center gap-2">
+          <input
+            type="checkbox"
+            name="blur"
+            checked={formData.blur}
+            onChange={handleChange}
+            className="border p-1"
+          />
+          <span className="text-sm text-neutral-700">Blur inputs</span>
+        </label>
 
         <div className="mt-48 flex gap-4 items-center flex-col sm:flex-row">
           <a
