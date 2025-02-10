@@ -1,32 +1,35 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    domain: sessionStorage.getItem("domain") || "",
-    userId: sessionStorage.getItem("userId") || "",
-    videoId1: sessionStorage.getItem("videoId1") || "",
-    videoId2: sessionStorage.getItem("videoId2") || "",
-    blur: sessionStorage.getItem("blur") === "true" || false,
-  });
+  const [domain, setDomain] = useState("");
+  const [userId, setUserId] = useState("");
+  const [videoId1, setVideoId1] = useState("");
+  const [videoId2, setVideoId2] = useState("");
+  const [blur, setBlur] = useState(false);
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    setDomain(sessionStorage.getItem("domain") || "")
+    setUserId(sessionStorage.getItem("userId") || "")
+    setVideoId1(sessionStorage.getItem("videoId1") || "")
+    setVideoId2(sessionStorage.getItem("videoId2") || "")
+    setBlur(sessionStorage.getItem("blur") === "true" || false)
+  }, []);
+
+  const handleChange = (setValue) => (e) => {
     const { name, value, checked } = e.target;
-    const checked_or_value = (e.target.type === "checkbox") ? checked : value;
+    const checked_or_value = e.target.type === "checkbox" ? checked : value;
     sessionStorage.setItem(name, checked_or_value);
-    setFormData((prev) => ({
-      ...prev,
-      [name]: checked_or_value,
-    }));
+    setValue(checked_or_value);
   };
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 group" data-blur={formData.blur}>
+      <main className="flex flex-col gap-8 row-start-2 group" data-blur={blur}>
         <h1 className="text-4xl font-bold text-center sm:text-left">VideoHub demo using Next.js</h1>
 
         <label className="flex flex-wrap items-baseline gap-2">
@@ -34,8 +37,8 @@ export default function Home() {
           <input
             type="text"
             name="domain"
-            value={formData.domain}
-            onChange={handleChange}
+            value={domain}
+            onChange={handleChange(setDomain)}
             className="group-data-[blur=true]:blur border p-1"
           />
         </label>
@@ -45,8 +48,8 @@ export default function Home() {
           <input
             type="text"
             name="userId"
-            value={formData.userId}
-            onChange={handleChange}
+            value={userId}
+            onChange={handleChange(setUserId)}
             className="group-data-[blur=true]:blur border p-1"
           />
         </label>
@@ -57,16 +60,16 @@ export default function Home() {
             <input
               type="text"
               name="videoId1"
-              value={formData.videoId1}
-              onChange={handleChange}
+              value={videoId1}
+              onChange={handleChange(setVideoId1)}
               className="group-data-[blur=true]:blur w-full border p-1"
             />
             <Link
               href={{
-                pathname: `/video/${formData.domain}/${formData.videoId1}`,
+                pathname: `/video/${domain}/${videoId1}`,
                 query: {
-                  ...formData.blur && {blur: true},
-                  ...formData.userId && {userId: formData.userId},
+                  ...(blur && { blur: true }),
+                  ...(userId && { userId }),
                 },
               }}
               className="flex items-center gap-1 text-blue-500"
@@ -76,16 +79,16 @@ export default function Home() {
             <input
               type="text"
               name="videoId2"
-              value={formData.videoId2}
+              value={videoId2}
               onChange={handleChange}
               className="group-data-[blur=true]:blur w-full border p-1"
             />
             <Link
               href={{
-                pathname: `/video/${formData.domain}/${formData.videoId2}`,
+                pathname: `/video/${domain}/${videoId2}`,
                 query: {
-                  ...formData.blur && {blur: true},
-                  ...formData.userId && {userId: formData.userId},
+                  ...(blur && { blur: true }),
+                  ...(userId && { userId }),
                 },
               }}
               className="flex items-center gap-1 text-blue-500"
@@ -99,8 +102,8 @@ export default function Home() {
           <input
             type="checkbox"
             name="blur"
-            checked={formData.blur}
-            onChange={handleChange}
+            checked={blur}
+            onChange={handleChange(setBlur)}
             className="border p-1"
           />
           <span className="text-sm text-neutral-700">Blur inputs</span>
