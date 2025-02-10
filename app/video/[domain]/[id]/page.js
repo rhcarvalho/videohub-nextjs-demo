@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/solid'
 
 import VideoHub from "./videohub"
+import Other from "./other"
 
 export default async function Page({ params, searchParams }) {
   const { domain, id } = await params
@@ -18,6 +19,7 @@ export default async function Page({ params, searchParams }) {
       <p className="text-sm italic text-neutral-700 text-center sm:text-left">Some text BEFORE video player component</p>
       <VideoHub domain={domain} id={id} />
       <p className="text-sm italic text-neutral-700 text-center sm:text-left">Some text AFTER video player component</p>
+      <Other domain={domain} id={id} query={await searchParams} />
     </div>
   )
 }
