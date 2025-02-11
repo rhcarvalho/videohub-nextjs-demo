@@ -10,7 +10,7 @@ export default async function Page({ domain, id, query, userId }) {
     <div className="p-2 flex flex-col gap-4">
       <VideoHubMeta userId={userId} />
       <h1 className="text-4xl font-bold text-center sm:text-left">
-        VideoHub demo using Next.js
+        VideoHub + Next.js demo
       </h1>
       <Link href="/" className="flex items-center gap-1 text-blue-500">
         <ArrowLeftCircleIcon className="size-6" /> Back to home
