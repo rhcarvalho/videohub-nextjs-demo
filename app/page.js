@@ -5,19 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
-function VideoLink({ domain, videoId, n, blur, userId }) {
-  if (!domain || !videoId) return null;
+function VideoLink({ href, n }) {
+  if (!href) return null;
   return (
-    <Link
-      href={{
-        pathname: `/video/${domain}/${videoId}`,
-        query: {
-          ...(blur && { blur: true }),
-          ...(userId && { userId }),
-        },
-      }}
-      className="flex items-center gap-1 text-blue-500"
-    >
+    <Link href={href} className="flex items-center gap-1 text-blue-500">
       Go to video {n} <ArrowRightCircleIcon className="size-6" />
     </Link>
   );
@@ -43,6 +34,17 @@ export default function Home() {
     const checked_or_value = e.target.type === "checkbox" ? checked : value;
     sessionStorage.setItem(name, checked_or_value);
     setValue(checked_or_value);
+  };
+
+  const videoHref = (videoId) => {
+    if (!domain || !videoId) return null;
+    return {
+      pathname: `/video/${domain}/${videoId}`,
+      query: {
+        ...(blur && { blur: true }),
+        ...(userId && { userId }),
+      },
+    };
   };
 
   return (
@@ -88,13 +90,7 @@ export default function Home() {
               onChange={handleChange(setVideoId1)}
               className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <VideoLink
-              domain={domain}
-              videoId={videoId1}
-              n={1}
-              blur={blur}
-              userId={userId}
-            />
+            <VideoLink href={videoHref(videoId1)} n={1} />
             <input
               type="text"
               name="videoId2"
@@ -102,13 +98,7 @@ export default function Home() {
               onChange={handleChange(setVideoId2)}
               className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <VideoLink
-              domain={domain}
-              videoId={videoId2}
-              n={2}
-              blur={blur}
-              userId={userId}
-            />
+            <VideoLink href={videoHref(videoId2)} n={2} />
           </div>
         </div>
 
