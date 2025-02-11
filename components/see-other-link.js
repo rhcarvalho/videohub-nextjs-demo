@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
-export default function Other({ domain, id, query, idInQuery }) {
+export default function SeeOtherLink({ domain, id, query, idInQuery }) {
   const [otherId, setOtherId] = useState("");
 
   useEffect(() => {
