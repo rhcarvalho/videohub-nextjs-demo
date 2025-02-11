@@ -15,6 +15,14 @@ import { useRef, useEffect } from "react";
  * @returns {JSX.Element} The VideoHub component.
  */
 export function VideoHub({ domain, id }) {
+  if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(domain) || !/^[a-z0-9-]+$/.test(id)) {
+    return (
+      <div className="text-sm text-red-700">
+        Invalid VideoHub domain or video ID.
+      </div>
+    )
+  }
+
   const containerRef = useRef(null);
   const videohubRef = useRef(null);
 

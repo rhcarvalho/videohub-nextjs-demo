@@ -5,6 +5,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
+function VideoLink({ domain, videoId, n, blur, userId }) {
+  if (!domain || !videoId) return null
+  return <Link
+    href={{
+      pathname: `/video/${domain}/${videoId}`,
+      query: {
+        ...(blur && { blur: true }),
+        ...(userId && { userId }),
+      },
+    }}
+    className="flex items-center gap-1 text-blue-500"
+  >
+    Go to video {n} <ArrowRightCircleIcon className="size-6" />
+  </Link>
+}
+
 export default function Home() {
   const [domain, setDomain] = useState("");
   const [userId, setUserId] = useState("");
@@ -62,39 +78,17 @@ export default function Home() {
               name="videoId1"
               value={videoId1}
               onChange={handleChange(setVideoId1)}
-              className="group-data-[blur=true]:blur w-full border p-1"
+              className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link
-              href={{
-                pathname: `/video/${domain}/${videoId1}`,
-                query: {
-                  ...(blur && { blur: true }),
-                  ...(userId && { userId }),
-                },
-              }}
-              className="flex items-center gap-1 text-blue-500"
-            >
-              Go to video 1 <ArrowRightCircleIcon className="size-6" />
-            </Link>
+            <VideoLink domain={domain} videoId={videoId1} n={1} blur={blur} userId={userId} />
             <input
               type="text"
               name="videoId2"
               value={videoId2}
               onChange={handleChange(setVideoId2)}
-              className="group-data-[blur=true]:blur w-full border p-1"
+              className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <Link
-              href={{
-                pathname: `/video/${domain}/${videoId2}`,
-                query: {
-                  ...(blur && { blur: true }),
-                  ...(userId && { userId }),
-                },
-              }}
-              className="flex items-center gap-1 text-blue-500"
-            >
-              Go to video 2 <ArrowRightCircleIcon className="size-6" />
-            </Link>
+            <VideoLink domain={domain} videoId={videoId2} n={2} blur={blur} userId={userId} />
           </div>
         </div>
 
