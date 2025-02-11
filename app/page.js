@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -6,19 +6,21 @@ import Link from "next/link";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
 
 function VideoLink({ domain, videoId, n, blur, userId }) {
-  if (!domain || !videoId) return null
-  return <Link
-    href={{
-      pathname: `/video/${domain}/${videoId}`,
-      query: {
-        ...(blur && { blur: true }),
-        ...(userId && { userId }),
-      },
-    }}
-    className="flex items-center gap-1 text-blue-500"
-  >
-    Go to video {n} <ArrowRightCircleIcon className="size-6" />
-  </Link>
+  if (!domain || !videoId) return null;
+  return (
+    <Link
+      href={{
+        pathname: `/video/${domain}/${videoId}`,
+        query: {
+          ...(blur && { blur: true }),
+          ...(userId && { userId }),
+        },
+      }}
+      className="flex items-center gap-1 text-blue-500"
+    >
+      Go to video {n} <ArrowRightCircleIcon className="size-6" />
+    </Link>
+  );
 }
 
 export default function Home() {
@@ -29,11 +31,11 @@ export default function Home() {
   const [blur, setBlur] = useState(false);
 
   useEffect(() => {
-    setDomain(sessionStorage.getItem("domain") || "")
-    setUserId(sessionStorage.getItem("userId") || "")
-    setVideoId1(sessionStorage.getItem("videoId1") || "")
-    setVideoId2(sessionStorage.getItem("videoId2") || "")
-    setBlur(sessionStorage.getItem("blur") === "true" || false)
+    setDomain(sessionStorage.getItem("domain") || "");
+    setUserId(sessionStorage.getItem("userId") || "");
+    setVideoId1(sessionStorage.getItem("videoId1") || "");
+    setVideoId2(sessionStorage.getItem("videoId2") || "");
+    setBlur(sessionStorage.getItem("blur") === "true" || false);
   }, []);
 
   const handleChange = (setValue) => (e) => {
@@ -46,10 +48,14 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 group" data-blur={blur}>
-        <h1 className="text-4xl font-bold text-center sm:text-left">VideoHub demo using Next.js</h1>
+        <h1 className="text-4xl font-bold text-center sm:text-left">
+          VideoHub demo using Next.js
+        </h1>
 
         <label className="flex flex-wrap items-baseline gap-2">
-          <span className="text-sm italic text-neutral-700">Enter VideoHub domain:</span>
+          <span className="text-sm italic text-neutral-700">
+            Enter VideoHub domain:
+          </span>
           <input
             type="text"
             name="domain"
@@ -60,7 +66,9 @@ export default function Home() {
         </label>
 
         <label className="flex flex-wrap items-baseline gap-2">
-          <span className="text-sm italic text-neutral-700">Enter external user ID (optional):</span>
+          <span className="text-sm italic text-neutral-700">
+            Enter external user ID (optional):
+          </span>
           <input
             type="text"
             name="userId"
@@ -80,7 +88,13 @@ export default function Home() {
               onChange={handleChange(setVideoId1)}
               className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <VideoLink domain={domain} videoId={videoId1} n={1} blur={blur} userId={userId} />
+            <VideoLink
+              domain={domain}
+              videoId={videoId1}
+              n={1}
+              blur={blur}
+              userId={userId}
+            />
             <input
               type="text"
               name="videoId2"
@@ -88,7 +102,13 @@ export default function Home() {
               onChange={handleChange(setVideoId2)}
               className="col-start-1 group-data-[blur=true]:blur w-full border p-1"
             />
-            <VideoLink domain={domain} videoId={videoId2} n={2} blur={blur} userId={userId} />
+            <VideoLink
+              domain={domain}
+              videoId={videoId2}
+              n={2}
+              blur={blur}
+              userId={userId}
+            />
           </div>
         </div>
 

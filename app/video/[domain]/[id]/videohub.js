@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRef, useEffect } from "react";
 
@@ -20,7 +20,7 @@ export function VideoHub({ domain, id }) {
       <div className="text-sm text-red-700">
         Invalid VideoHub domain or video ID.
       </div>
-    )
+    );
   }
 
   const containerRef = useRef(null);
@@ -71,8 +71,10 @@ export function VideoHub({ domain, id }) {
   }, [domain, id]);
 
   return (
-    <div ref={containerRef} className="max-w-[1280px] text-sm text-neutral-700">Video Container</div>
-  )
+    <div ref={containerRef} className="max-w-[1280px] text-sm text-neutral-700">
+      Video Container
+    </div>
+  );
 }
 
 /**
@@ -86,14 +88,14 @@ export function VideoHub({ domain, id }) {
  */
 export function VideoHubMeta({ userId }) {
   if (!userId) {
-    return null
+    return null;
   }
   // Convert the user ID to string (could also be a unique stable hash of the
   // user ID).
-  userId = userId.toString()
+  userId = userId.toString();
   return (
     <script data-videohub="metadata" type="application/json">
       {JSON.stringify({ userId })}
     </script>
-  )
+  );
 }
