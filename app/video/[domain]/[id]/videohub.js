@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 
-export default function VideoHub({ domain, id }) {
+export function VideoHub({ domain, id }) {
   const containerRef = useRef(null);
   const videohubRef = useRef(null);
 
@@ -52,5 +52,28 @@ export default function VideoHub({ domain, id }) {
 
   return (
     <div ref={containerRef} className="max-w-[1280px] text-sm text-neutral-700">Video Container</div>
+  )
+}
+
+/**
+ * VideoHubMeta component renders metadata in JSON format to be consumed by the
+ * VideoHub embed player.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.userId - The ID of the user. Setting this value will
+ * enable features such as "continue from where you left off".
+ * @returns {JSX.Element|null}
+ */
+export function VideoHubMeta({ userId }) {
+  if (!userId) {
+    return null
+  }
+  // Convert the user ID to string (could also be a unique stable hash of the
+  // user ID).
+  userId = userId.toString()
+  return (
+    <script data-videohub="metadata" type="application/json">
+      {JSON.stringify({ userId })}
+    </script>
   )
 }
