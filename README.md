@@ -2,7 +2,14 @@
 
 This project demonstrates how to integrate the [VideoHub](https://www.videohub.com.br) embed player into a Next.js project.
 
-See [`videohub.js`](./app/video/[domain]/[id]/videohub.js) for an example component implementation that renders the VideoHub player by loading the official `embed.js` script.
+See [`videohub.js`](./components/videohub.js) for an example component implementation that renders the VideoHub player by loading the official `embed.js` script.
+
+Key points:
+
+1. Use `useRef` to keep track of where the VideoHub `<script>` should be placed and to avoid rendering it twice
+2. Use `useEffect` to create the `<script>` element on-demand
+3. Set `key` to force re-rendering component when video ID changes
+4. Use a query parameter as a "cache buster" to force module reload every time the component is mounted
 
 ## Getting Started
 
