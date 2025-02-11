@@ -6,10 +6,10 @@ See [`videohub.js`](./components/videohub.js) for an example component implement
 
 Key points:
 
-1. Use `useRef` to keep track of where the VideoHub `<script>` should be placed and to avoid rendering it twice
-2. Use `useEffect` to create the `<script>` element on-demand
-3. Set `key` to force re-rendering component when video ID changes
-4. Use a query parameter as a "cache buster" to force module reload every time the component is mounted
+1. Use `useEffect` to create the `<script>` element on-demand
+2. Use `useRef` to keep track of where the VideoHub `<script>` should be placed and to avoid rendering it twice
+3. Add a query parameter to the script `src` attribute as a "cache buster" to force module reload every time the component is mounted
+4. Set a `key` to force component re-rendering when video ID changes
 
 ## Getting Started
 
