@@ -2,6 +2,18 @@
 
 import { useRef, useEffect } from "react";
 
+/**
+ * VideoHub component that loads and embeds a VideoHub video player.
+ *
+ * When using the component set `key={id}` with the video ID, to tell React to
+ * re-render the component when the video ID changes.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.domain - The domain from which to load the VideoHub script.
+ * @param {string} props.id - The ID of the video to embed.
+ *
+ * @returns {JSX.Element} The VideoHub component.
+ */
 export function VideoHub({ domain, id }) {
   const containerRef = useRef(null);
   const videohubRef = useRef(null);
