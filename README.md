@@ -1,5 +1,21 @@
 # VideoHub embed player integration with Next.js
 
+## Security Notice
+
+<div style="border: 2px solid red; padding: 10px;">
+
+This project is intended for educational purposes only. We do not recommend
+deploying the code as is publicly, as it may expose your infrastructure to
+security risks.
+
+For instance, in December 2025, a security vulnerability disclosed as
+[CVE-2025-66478](https://nextjs.org/blog/CVE-2025-66478) affected many versions
+of Next.js, including the specific version that was used in this demo project.
+
+</div>
+
+## About
+
 This project demonstrates how to integrate the [VideoHub](https://www.videohub.com.br) embed player into a Next.js project.
 
 See [`videohub.js`](./components/videohub.js) for an example component implementation that renders the VideoHub player by loading the official `embed.js` script.
